@@ -25,8 +25,20 @@ namespace WebApplication1.Controllers
         public IActionResult Create() => View();
 
         [HttpPost, Authorize(Roles = "Owner")]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(QuestRoom room)
         {
+            if (!int.TryParse(User.FindFirst("UserId")?.Value, out var ownerId))
+            {
+                return Unauthorized();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(room);
+            }
+
+            room.Owner_ID = ownerId;
             _context.QuestRoom.Add(room);
             _context.SaveChanges();
             return RedirectToAction("Index", "Home");

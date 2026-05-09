@@ -1,14 +1,20 @@
 ﻿@using WebApplication1.Models
-@@model IEnumerable<QuestRoom>
+@model IEnumerable<QuestRoom>
 
-    <h2>Список кімнат</h2>
-    <ul>
-        @foreach (var room in Model)
-        {
-            <li>
-                <a asp-controller="Room" asp-action="Details" asp-route-id="@room.Room_ID">
-                    @room.QR_Name (@room.City)
-                </a>
-            </li>
-        }
-    </ul>
+<h2>Список кімнат</h2>
+
+@if (TempData["DbError"] is string dbError)
+{
+    <div class="alert alert-warning" role="alert">@dbError</div>
+}
+
+<ul>
+    @foreach (var room in Model)
+    {
+        <li>
+            <a asp-controller="Room" asp-action="Details" asp-route-id="@room.Room_ID">
+                @room.QR_Name (@room.City)
+            </a>
+        </li>
+    }
+</ul>
