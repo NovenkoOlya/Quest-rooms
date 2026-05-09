@@ -23,8 +23,14 @@ namespace WebApplication1.Controllers
         public IActionResult Create(int roomId) => View(new Quest { Room_ID = roomId });
 
         [HttpPost, Authorize(Roles = "Owner")]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Quest quest)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(quest);
+            }
+
             _context.Quests.Add(quest);
             _context.SaveChanges();
             return RedirectToAction("Details", "Room", new { id = quest.Room_ID });

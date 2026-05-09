@@ -14,9 +14,20 @@ namespace WebApplication1.Controllers
         public IActionResult Create(int roomId) => View(new Review { Room_ID = roomId });
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Review review)
         {
-            review.Client_ID = int.Parse(User.FindFirst("UserId").Value);
+            if (!int.TryParse(User.FindFirst("UserId")?.Value, out var clientId))
+            {
+                return Unauthorized();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(review);
+            }
+
+            review.Client_ID = clientId;
             _context.Reviews.Add(review);
             _context.SaveChanges();
             return RedirectToAction("Details", "Room", new { id = review.Room_ID });

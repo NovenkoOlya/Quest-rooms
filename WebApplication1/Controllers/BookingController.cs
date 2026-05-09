@@ -13,11 +13,22 @@ namespace WebApplication1.Controllers
         public BookingController(ApplicationDbContext context) => _context = context;
 
         [HttpPost, Authorize(Roles = "Client")]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(int sessionId, int playersCount)
         {
+            if (!int.TryParse(User.FindFirst("UserId")?.Value, out var clientId))
+            {
+                return Unauthorized();
+            }
+
+            if (playersCount < 1)
+            {
+                return BadRequest("Players count must be greater than zero.");
+            }
+
             var booking = new Booking
             {
-                Client_ID = int.Parse(User.FindFirst("UserId").Value),
+                Client_ID = clientId,
                 Session_ID = sessionId,
                 Players_Count = playersCount,
                 B_Status = "Pending"
@@ -30,17 +41,38 @@ namespace WebApplication1.Controllers
         [Authorize(Roles = "Client")]
         public IActionResult MyBooking()
         {
-            var clientId = int.Parse(User.FindFirst("UserId").Value);
+            if (!int.TryParse(User.FindFirst("UserId")?.Value, out var clientId))
+            {
+                return Unauthorized();
+            }
+
             var Booking = _context.Booking
                 .Include(b => b.Session)
+                .ThenInclude(s => s.Quest)
                 .Where(b => b.Client_ID == clientId).ToList();
-            return View(Booking);
+            return View("MyBookings", Booking);
         }
 
         [HttpPost, Authorize(Roles = "Client")]
+        [ValidateAntiForgeryToken]
         public IActionResult Cancel(int id)
         {
             var booking = _context.Booking.Find(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            if (!int.TryParse(User.FindFirst("UserId")?.Value, out var clientId))
+            {
+                return Unauthorized();
+            }
+
+            if (booking.Client_ID != clientId)
+            {
+                return Forbid();
+            }
+
             if (booking != null) booking.B_Status = "Cancelled";
             _context.SaveChanges();
             return RedirectToAction("MyBooking");
