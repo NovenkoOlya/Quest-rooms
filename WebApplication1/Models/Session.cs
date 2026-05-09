@@ -11,8 +11,8 @@ namespace WebApplication1.Models
         public decimal? S_Price { get; set; }
         public string? S_Status { get; set; } = "Available";
 
-        public Quest Quest { get; set; }
-        public ICollection<Booking> Booking { get; set; }
+        public Quest? Quest { get; set; }
+        public ICollection<Booking> Booking { get; set; } = new List<Booking>();
     }
 
 }
