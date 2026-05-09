@@ -12,8 +12,8 @@ namespace WebApplication1.Models
         public string? Review_Text { get; set; }
         public DateTime? R_Creation_Date { get; set; } = DateTime.Now;
 
-        public User Client { get; set; }
-        public Room Room { get; set; }
+        public User? Client { get; set; }
+        public Room? Room { get; set; }
     }
 
 }
