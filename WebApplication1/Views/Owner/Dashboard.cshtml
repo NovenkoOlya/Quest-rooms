@@ -1,0 +1,13 @@
+﻿@using WebApplication1.Models
+@model IEnumerable<QuestRoom>
+
+<h2>Мої кімнати</h2>
+<ul>
+    @foreach (var room in Model)
+    {
+        <li>
+            @room.QR_Name — <a asp-controller="Room" asp-action="Details" asp-route-id="@room.Room_ID">Переглянути</a>
+        </li>
+    }
+</ul>
+<a asp-controller="Room" asp-action="Create">Додати нову кімнату</a>

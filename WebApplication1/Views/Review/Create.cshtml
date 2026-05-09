@@ -1,0 +1,12 @@
+﻿@using WebApplication1.Models
+@model Review
+
+<h2>Залишити відгук</h2>
+<form asp-action="Create" method="post">
+    <input type="hidden" asp-for="Room_ID" />
+    <label>Оцінка:</label>
+    <input asp-for="Rating" type="number" min="1" max="5" />
+    <label>Текст:</label>
+    <textarea asp-for="Review_Text"></textarea>
+    <button type="submit">Надіслати</button>
+</form>

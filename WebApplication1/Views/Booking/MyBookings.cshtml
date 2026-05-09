@@ -1,0 +1,21 @@
+﻿@using WebApplication1.Models
+@model IEnumerable<Booking>
+
+<h2>Мої бронювання</h2>
+<table>
+    <tr><th>Дата</th><th>Квест</th><th>Статус</th><th></th></tr>
+    @foreach (var booking in Model)
+    {
+        <tr>
+            <td>@booking.Session.Start_DateTime</td>
+            <td>@booking.Session.Quest.Q_Name</td>
+            <td>@booking.B_Status</td>
+            <td>
+                <form asp-action="Cancel" method="post">
+                    <input type="hidden" name="id" value="@booking.Booking_ID" />
+                    <button type="submit">Скасувати</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,26 @@
+﻿@using WebApplication1.Models
+@model QuestRoom
+
+<h2>@Model.QR_Name</h2>
+<p>@Model.QR_Description</p>
+<p>Адреса: @Model.Address</p>
+
+<h3>Квести</h3>
+<ul>
+    @foreach (var quest in Model.Quests)
+    {
+        <li>
+            <a asp-controller="Quest" asp-action="Details" asp-route-id="@quest.Quest_ID">
+                @quest.Q_Name
+            </a>
+        </li>
+    }
+</ul>
+
+<h3>Відгуки</h3>
+<ul>
+    @foreach (var review in Model.Reviews)
+    {
+        <li>@review.Rating ★ — @review.Review_Text</li>
+    }
+</ul>

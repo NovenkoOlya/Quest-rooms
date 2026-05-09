@@ -1,0 +1,22 @@
+﻿@using WebApplication1.Models
+@model Quest
+
+<h2>@Model.Q_Name</h2>
+<p>@Model.Q_Description</p>
+<p>Складність: @Model.Difficulty_Level</p>
+<p>Тривалість: @Model.Duration хв</p>
+
+<h3>Сесії</h3>
+<ul>
+    @foreach (var session in Model.Session)
+    {
+        <li>
+            @session.Start_DateTime.ToString("dd.MM.yyyy HH:mm") — @session.S_Price грн
+            <form asp-controller="Booking" asp-action="Create" method="post">
+                <input type="hidden" name="sessionId" value="@session.Session_ID" />
+                <input type="number" name="playersCount" min="1" />
+                <button type="submit">Забронювати</button>
+            </form>
+        </li>
+    }
+</ul>

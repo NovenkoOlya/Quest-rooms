@@ -1,0 +1,37 @@
+﻿@using WebApplication1.Models
+@model AdminDashboardViewModel
+
+<h2>Адмін панель</h2>
+
+<h3>Кімнати</h3>
+<ul>
+    @foreach (var room in Model.Rooms)
+    {
+        <li>
+            @room.QR_Name — @(room.Availability_Status ? "Активна" : "Неактивна")
+            <form asp-action="ApproveRoom" method="post">
+                <input type="hidden" name="id" value="@room.Room_ID" />
+                <button type="submit">Ухвалити</button>
+            </form>
+            <form asp-action="RejectRoom" method="post">
+                <input type="hidden" name="id" value="@room.Room_ID" />
+                <button type="submit">Відхилити</button>
+            </form>
+        </li>
+    }
+</ul>
+
+<h3>Бронювання</h3>
+<ul>
+    @foreach (var booking in Model.Booking)
+    {
+        <li>
+            @booking.Session.Quest.Q_Name — @booking.B_Status
+            <form asp-action="CancelBooking" method="post">
+                <input type="hidden" name="id" value="@booking.Booking_ID" />
+                <button type="submit">Скасувати</button>
+            </form>
+        </li>
+    }
+</ul>
+
