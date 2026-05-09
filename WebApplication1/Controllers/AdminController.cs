@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Models;
 
@@ -14,11 +15,15 @@ namespace WebApplication1.Controllers
         public IActionResult Dashboard()
         {
             var rooms = _context.QuestRoom.ToList();
-            var booking = _context.Booking.ToList();
+            var booking = _context.Booking
+                .Include(b => b.Session)
+                .ThenInclude(s => s.Quest)
+                .ToList();
             return View(new AdminDashboardViewModel { Rooms = rooms, Booking = booking });
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ApproveRoom(int id)
         {
             var room = _context.QuestRoom.Find(id);
@@ -28,6 +33,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult RejectRoom(int id)
         {
             var room = _context.QuestRoom.Find(id);
@@ -37,6 +43,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult CancelBooking(int id)
         {
             var booking = _context.Booking.Find(id);
