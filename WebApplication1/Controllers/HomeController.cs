@@ -19,14 +19,14 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                var rooms = _context.QuestRoom.AsNoTracking().ToList();
+                var rooms = _context.Room.AsNoTracking().ToList();
                 return View(rooms);
             }
             catch (InvalidOperationException ex)
             {
                 _logger.LogError(ex, "Database transient failure while loading rooms for home page.");
                 TempData["DbError"] = "Тимчасова помилка з'єднання з базою даних. Спробуйте ще раз через кілька секунд.";
-                return View(Enumerable.Empty<WebApplication1.Models.QuestRoom>());
+                return View(Enumerable.Empty<WebApplication1.Models.Room>());
             }
         }
     }

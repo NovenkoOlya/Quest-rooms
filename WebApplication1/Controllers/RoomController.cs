@@ -14,7 +14,7 @@ namespace WebApplication1.Controllers
 
         public IActionResult Details(int id)
         {
-            var room = _context.QuestRoom
+            var room = _context.Room
                 .Include(r => r.Quests)
                 .Include(r => r.Reviews)
                 .FirstOrDefault(r => r.Room_ID == id);
@@ -26,7 +26,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost, Authorize(Roles = "Owner")]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(QuestRoom room)
+        public IActionResult Create(Room room)
         {
             if (!int.TryParse(User.FindFirst("UserId")?.Value, out var ownerId))
             {
@@ -39,7 +39,7 @@ namespace WebApplication1.Controllers
             }
 
             room.Owner_ID = ownerId;
-            _context.QuestRoom.Add(room);
+            _context.Room.Add(room);
             _context.SaveChanges();
             return RedirectToAction("Index", "Home");
         }

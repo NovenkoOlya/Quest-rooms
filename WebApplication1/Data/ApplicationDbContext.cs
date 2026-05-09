@@ -10,7 +10,7 @@ namespace WebApplication1.Data
             : base(options) { }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<QuestRoom> QuestRoom { get; set; }
+        public DbSet<Room> Room { get; set; }
         public DbSet<Quest> Quests { get; set; }
         public DbSet<Session> Session { get; set; }
         public DbSet<Booking> Booking { get; set; }

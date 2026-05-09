@@ -14,7 +14,7 @@ namespace WebApplication1.Controllers
 
         public IActionResult Dashboard()
         {
-            var rooms = _context.QuestRoom.ToList();
+            var rooms = _context.Room.ToList();
             var booking = _context.Booking
                 .Include(b => b.Session)
                 .ThenInclude(s => s.Quest)
@@ -26,7 +26,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ApproveRoom(int id)
         {
-            var room = _context.QuestRoom.Find(id);
+            var room = _context.Room.Find(id);
             if (room != null) room.Availability_Status = true;
             _context.SaveChanges();
             return RedirectToAction("Dashboard");
@@ -36,7 +36,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult RejectRoom(int id)
         {
-            var room = _context.QuestRoom.Find(id);
+            var room = _context.Room.Find(id);
             if (room != null) room.Availability_Status = false;
             _context.SaveChanges();
             return RedirectToAction("Dashboard");

@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication1.Models
 {
-    public class QuestRoom
+    public class Room
     {
         [Key]
         public int Room_ID { get; set; }
+        [ForeignKey("Owner")] // Вказуємо на властивість-об'єкт
         public int Owner_ID { get; set; }
         public string QR_Name { get; set; }
         public string QR_Description { get; set; }

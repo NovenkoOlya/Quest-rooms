@@ -10,13 +10,15 @@ namespace WebApplication1
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            {
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection"),
                     sqlOptions => sqlOptions.EnableRetryOnFailure(
                         maxRetryCount: 5,
                         maxRetryDelay: TimeSpan.FromSeconds(10),
-                        errorNumbersToAdd: null)));
+                        errorNumbersToAdd: null));
+            });
             builder.Services.AddControllersWithViews();
 
             // Ðåºñòðóºìî ApplicationDbContext

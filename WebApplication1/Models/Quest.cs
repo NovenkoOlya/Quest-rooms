@@ -16,7 +16,7 @@ namespace WebApplication1.Models
         public int Max_Players { get; set; }
         public decimal Base_Price { get; set; }
 
-        public QuestRoom Room { get; set; }
+        public Room Room { get; set; }
         public ICollection<Session> Session { get; set; }
     }
 

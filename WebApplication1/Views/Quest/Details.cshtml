@@ -11,7 +11,7 @@
     @foreach (var session in Model.Session)
     {
         <li>
-            @session.Start_DateTime.ToString("dd.MM.yyyy HH:mm") — @session.S_Price грн
+            @($"{session.Start_DateTime:dd.MM.yyyy HH:mm}") — @session.S_Price грн
             <form asp-controller="Booking" asp-action="Create" method="post">
                 <input type="hidden" name="sessionId" value="@session.Session_ID" />
                 <input type="number" name="playersCount" min="1" />

@@ -14,7 +14,7 @@ namespace WebApplication1.Controllers
         public IActionResult Dashboard()
         {
             var ownerId = int.Parse(User.FindFirst("UserId").Value);
-            var rooms = _context.QuestRoom.Where(r => r.Owner_ID == ownerId).ToList();
+            var rooms = _context.Room.Where(r => r.Owner_ID == ownerId).ToList();
             return View(rooms);
         }
     }

@@ -2,7 +2,7 @@
 {
     public class AdminDashboardViewModel
     {
-        public List<QuestRoom> Rooms { get; set; }
+        public List<Room> Rooms { get; set; }
         public List<Booking> Booking { get; set; }
     }
 }
