@@ -51,7 +51,7 @@
         {
             <div class="card mb-2">
                 <div class="card-body">
-                    <strong>@review.User.Full_Name</strong>
+                    <strong>@review.User?.Full_Name</strong>
                     <span class="text-muted">
                         @(review.R_Creation_Date.HasValue
                             ? review.R_Creation_Date.Value.ToString("dd.MM.yyyy HH:mm")

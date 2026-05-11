@@ -21,7 +21,7 @@ namespace WebApplication1.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Review>()
-                .HasOne(r => r.Client)
+                .HasOne(r => r.User)
                 .WithMany()
                 .HasForeignKey(r => r.User_ID)
                 .OnDelete(DeleteBehavior.Restrict);

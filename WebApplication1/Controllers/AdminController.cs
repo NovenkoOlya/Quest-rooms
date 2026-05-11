@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
                 .ToList();
             var users = _context.User.OrderBy(u => u.Role).ThenBy(u => u.Full_Name).ToList();
             var reviews = _context.Review
-                .Include(r => r.Client)
+                .Include(r => r.User)
                 .Include(r => r.Room)
                 .OrderByDescending(r => r.R_Creation_Date)
                 .ToList();
