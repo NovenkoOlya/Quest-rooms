@@ -8,7 +8,7 @@ namespace WebApplication1.Models
         [Key]
         public int Review_ID { get; set; }
 
-        [ForeignKey("User")]
+        [ForeignKey(nameof(Client))]
         public int User_ID { get; set; }
 
         [ForeignKey("Room")]

@@ -14,6 +14,7 @@ namespace WebApplication1.Controllers
         public IActionResult Create(int roomId) => View(new Review { Room_ID = roomId });
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddReview(int Room_ID, int Rating, string Review_Text)
         {
             var userClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);

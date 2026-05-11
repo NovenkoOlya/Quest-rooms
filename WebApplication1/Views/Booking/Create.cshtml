@@ -4,9 +4,10 @@
     <h2>Зробити бронювання</h2>
 
     <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
         <div class="mb-3">
             <label class="form-label">Дата та час:</label>
-            <select asp-for="Session_ID" asp-items="ViewBag.Sessions" class="form-select" required></select>
+            <select name="sessionId" asp-items="ViewBag.Sessions" class="form-select" required></select>
         </div>
 
         <div class="mb-3">

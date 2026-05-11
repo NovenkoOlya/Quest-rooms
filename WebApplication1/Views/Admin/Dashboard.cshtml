@@ -8,12 +8,14 @@
     @foreach (var room in Model.Rooms)
     {
         <li>
-            @room.QR_Name — @(room.Availability_Status ? "Активна" : "Неактивна")
-            <form asp-action="ApproveRoom" method="post">
+            <strong>@room.QR_Name</strong> — @(room.Availability_Status ? "Активна" : "Неактивна")
+            <form asp-action="ApproveRoom" method="post" class="d-inline">
+                @Html.AntiForgeryToken()
                 <input type="hidden" name="id" value="@room.Room_ID" />
                 <button type="submit">Ухвалити</button>
             </form>
-            <form asp-action="RejectRoom" method="post">
+            <form asp-action="RejectRoom" method="post" class="d-inline">
+                @Html.AntiForgeryToken()
                 <input type="hidden" name="id" value="@room.Room_ID" />
                 <button type="submit">Відхилити</button>
             </form>
@@ -26,8 +28,9 @@
     @foreach (var booking in Model.Booking)
     {
         <li>
-            @booking.Session.Quest.Q_Name — @booking.B_Status
-            <form asp-action="CancelBooking" method="post">
+            @booking.User?.Full_Name — @booking.Session?.Quest?.Q_Name — @booking.B_Status
+            <form asp-action="CancelBooking" method="post" class="d-inline">
+                @Html.AntiForgeryToken()
                 <input type="hidden" name="id" value="@booking.Booking_ID" />
                 <button type="submit">Скасувати</button>
             </form>
@@ -35,3 +38,25 @@
     }
 </ul>
 
+<h3>Користувачі (всі ролі)</h3>
+<ul>
+    @foreach (var user in Model.Users)
+    {
+        <li>@user.Full_Name — @user.Role — @user.Email — @user.Phone_Number</li>
+    }
+</ul>
+
+<h3>Коментарі</h3>
+<ul>
+    @foreach (var review in Model.Reviews)
+    {
+        <li>
+            @review.Client?.Full_Name / @review.Room?.QR_Name: @review.Review_Text (@review.Rating)
+            <form asp-action="DeleteReview" method="post" class="d-inline">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@review.Review_ID" />
+                <button type="submit">Видалити</button>
+            </form>
+        </li>
+    }
+</ul>
