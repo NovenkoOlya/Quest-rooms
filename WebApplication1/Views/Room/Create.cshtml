@@ -1,0 +1,13 @@
+﻿@model WebApplication1.Models.Room
+
+<h2>Додати кімнату</h2>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div><label>Назва</label><input asp-for="QR_Name" /></div>
+    <div><label>Опис</label><textarea asp-for="QR_Description"></textarea></div>
+    <div><label>Місто</label><input asp-for="City" /></div>
+    <div><label>Адреса</label><input asp-for="Address" /></div>
+    <div><label>Контакт</label><input asp-for="Contact_Info" /></div>
+    <button type="submit">Створити</button>
+</form>

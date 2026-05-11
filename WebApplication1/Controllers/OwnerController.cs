@@ -13,7 +13,7 @@ namespace WebApplication1.Controllers
 
         public IActionResult Dashboard()
         {
-            var ownerId = int.Parse(User.FindFirst("UserId").Value);
+            var ownerId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)!.Value);
             var rooms = _context.Room.Where(r => r.Owner_ID == ownerId).ToList();
             return View(rooms);
         }

@@ -15,6 +15,23 @@ namespace WebApplication1.Data
         public DbSet<Session> Session { get; set; }
         public DbSet<Booking> Booking { get; set; }
         public DbSet<Review> Review { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Client)
+                .WithMany()
+                .HasForeignKey(r => r.User_ID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Room)
+                .WithMany(r => r.Review)
+                .HasForeignKey(r => r.Room_ID)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 
 }

@@ -12,11 +12,31 @@ namespace WebApplication1.Controllers
         private readonly ApplicationDbContext _context;
         public BookingController(ApplicationDbContext context) => _context = context;
 
+        [Authorize(Roles = "Client")]
+        public IActionResult Create(int questId)
+        {
+            var sessions = _context.Session
+                .Include(s => s.Quest)
+                .Where(s => s.Quest_ID == questId && s.S_Status == "Available")
+                .OrderBy(s => s.Start_DateTime)
+                .ToList();
+
+            ViewBag.Sessions = sessions
+                .Select(s => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                {
+                    Value = s.Session_ID.ToString(),
+                    Text = $"{s.Start_DateTime:dd.MM.yyyy HH:mm} - {s.S_Price} грн"
+                })
+                .ToList();
+
+            return View(new Booking());
+        }
+
         [HttpPost, Authorize(Roles = "Client")]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(int sessionId, int playersCount)
+        public IActionResult Create(int sessionId, int playersCount, string? clientContacts)
         {
-            if (!int.TryParse(User.FindFirst("UserId")?.Value, out var clientId))
+            if (!int.TryParse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value, out var clientId))
             {
                 return Unauthorized();
             }
@@ -31,6 +51,7 @@ namespace WebApplication1.Controllers
                 User_ID = clientId,
                 Session_ID = sessionId,
                 Players_Count = playersCount,
+                Client_Contacts = clientContacts,
                 B_Status = "Pending"
             };
             _context.Booking.Add(booking);
@@ -41,7 +62,7 @@ namespace WebApplication1.Controllers
         [Authorize(Roles = "Client")]
         public IActionResult MyBooking()
         {
-            if (!int.TryParse(User.FindFirst("UserId")?.Value, out var clientId))
+            if (!int.TryParse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value, out var clientId))
             {
                 return Unauthorized();
             }
@@ -63,7 +84,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            if (!int.TryParse(User.FindFirst("UserId")?.Value, out var clientId))
+            if (!int.TryParse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value, out var clientId))
             {
                 return Unauthorized();
             }

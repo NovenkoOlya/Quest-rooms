@@ -16,10 +16,18 @@ namespace WebApplication1.Controllers
         {
             var rooms = _context.Room.ToList();
             var booking = _context.Booking
+                .Include(b => b.User)
                 .Include(b => b.Session)
                 .ThenInclude(s => s.Quest)
                 .ToList();
-            return View(new AdminDashboardViewModel { Rooms = rooms, Booking = booking });
+            var users = _context.User.OrderBy(u => u.Role).ThenBy(u => u.Full_Name).ToList();
+            var reviews = _context.Review
+                .Include(r => r.Client)
+                .Include(r => r.Room)
+                .OrderByDescending(r => r.R_Creation_Date)
+                .ToList();
+
+            return View(new AdminDashboardViewModel { Rooms = rooms, Booking = booking, Users = users, Reviews = reviews });
         }
 
         [HttpPost]
@@ -49,6 +57,20 @@ namespace WebApplication1.Controllers
             var booking = _context.Booking.Find(id);
             if (booking != null) booking.B_Status = "Cancelled";
             _context.SaveChanges();
+            return RedirectToAction("Dashboard");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteReview(int id)
+        {
+            var review = _context.Review.Find(id);
+            if (review != null)
+            {
+                _context.Review.Remove(review);
+                _context.SaveChanges();
+            }
+
             return RedirectToAction("Dashboard");
         }
     }
