@@ -8,7 +8,7 @@ namespace WebApplication1.Models
         [Key]
         public int Review_ID { get; set; }
 
-        [ForeignKey(nameof(Client))]
+        [ForeignKey(nameof(User))]
         public int User_ID { get; set; }
 
         [ForeignKey("Room")]
@@ -18,7 +18,7 @@ namespace WebApplication1.Models
         public string? Review_Text { get; set; }
         public DateTime? R_Creation_Date { get; set; } = DateTime.Now;
 
-        public User? Client { get; set; }
+        public User? User { get; set; }
         public Room? Room { get; set; }
     }
 

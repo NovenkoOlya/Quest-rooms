@@ -51,7 +51,7 @@
     @foreach (var review in Model.Reviews)
     {
         <li>
-            @review.Client?.Full_Name / @review.Room?.QR_Name: @review.Review_Text (@review.Rating)
+            @review.User?.Full_Name / @review.Room?.QR_Name: @review.Review_Text (@review.Rating)
             <form asp-action="DeleteReview" method="post" class="d-inline">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="id" value="@review.Review_ID" />
