@@ -67,13 +67,16 @@ namespace WebApplication1.Controllers
         {
             var quest = _context.Quest
                 .Include(q => q.Room)
+                .ThenInclude(r => r.Review)
+                .ThenInclude(rv => rv.User)
                 .FirstOrDefault(q => q.Quest_ID == id);
 
-            if (quest == null)
-                return NotFound();
+            if (quest == null) return NotFound();
 
             return View(quest);
         }
+
+
 
         [Authorize(Roles = "Owner")]
         public IActionResult Create(int roomId) => View(new Quest { Room_ID = roomId });

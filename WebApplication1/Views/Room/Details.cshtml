@@ -8,7 +8,7 @@
 
 <h3>Квести</h3>
 <ul>
-@foreach (var quest in Model.Quests)
+@foreach (var quest in Model.Quest)
 {
     <li><a asp-controller="Quest" asp-action="Details" asp-route-id="@quest.Quest_ID">@quest.Q_Name</a></li>
 }

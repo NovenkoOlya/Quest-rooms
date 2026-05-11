@@ -1,8 +1,15 @@
 ﻿@model WebApplication1.Models.Quest
+@using WebApplication1.Models
+
+
 
 <div class="container mt-4">
     <h2>@Model.Q_Name</h2>
     <p>@Model.Q_Description</p>
+    @if (TempData["ReviewMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["ReviewMessage"]</div>
+    }
 
     @if (User.Identity.IsAuthenticated && User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == "Client")
     {
@@ -36,4 +43,31 @@
             <button type="submit" class="btn btn-success">Зробити бронювання</button>
         </form>
     }
+    <h3>Відгуки</h3>
+
+    @if (Model.Room != null && Model.Room.Review != null && Model.Room.Review.Any())
+    {
+        foreach (var review in Model.Room.Review.OrderByDescending(r => r.R_Creation_Date))
+        {
+            <div class="card mb-2">
+                <div class="card-body">
+                    <strong>@review.User.Full_Name</strong>
+                    <span class="text-muted">
+                        @(review.R_Creation_Date.HasValue
+                            ? review.R_Creation_Date.Value.ToString("dd.MM.yyyy HH:mm")
+                            : "")
+                    </span>
+                    <p>@review.Review_Text</p>
+                    <p>Оцінка: @review.Rating ★</p>
+
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>Ще немає відгуків для цього квесту.</p>
+    }
+
+
 </div>

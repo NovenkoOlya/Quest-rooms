@@ -37,7 +37,8 @@ namespace WebApplication1.Controllers
             _context.Review.Add(review);
             _context.SaveChanges();
 
-            return RedirectToAction("Details", "QuestRoom", new { id = Room_ID });
+            TempData["ReviewMessage"] = "Ваш відгук успішно додано!";
+            return RedirectToAction("Details", "Quest", new { id = Room_ID });
         }
 
 

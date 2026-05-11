@@ -18,7 +18,7 @@ namespace WebApplication1.Models
         public DateTime? QR_Creation_Date { get; set; } = DateTime.Now;
 
         public User? Owner { get; set; }
-        public ICollection<Quest> Quests { get; set; } = new List<Quest>();
+        public ICollection<Quest> Quest { get; set; } = new List<Quest>();
         public ICollection<Review> Review { get; set; } = new List<Review>();
     }
 }

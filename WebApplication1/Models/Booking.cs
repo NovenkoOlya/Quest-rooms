@@ -15,8 +15,8 @@ namespace WebApplication1.Models
         public DateTime B_Creation_Date { get; set; } = DateTime.Now;
         [ForeignKey("User_ID")]
         public User User { get; set; }
-
-        public Session? Session { get; set; }
+        [ForeignKey("Session_ID")]
+        public Session Session { get; set; }
     }
 
 }

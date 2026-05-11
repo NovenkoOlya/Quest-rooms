@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication1.Models
 {
@@ -10,8 +11,9 @@ namespace WebApplication1.Models
         public DateTime? Start_DateTime { get; set; }
         public decimal? S_Price { get; set; }
         public string? S_Status { get; set; } = "Available";
+        [ForeignKey("Quest_ID")]
+        public Quest Quest { get; set; }
 
-        public Quest? Quest { get; set; }
         public ICollection<Booking> Booking { get; set; } = new List<Booking>();
     }
 

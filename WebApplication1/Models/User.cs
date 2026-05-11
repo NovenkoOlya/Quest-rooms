@@ -14,5 +14,6 @@ namespace WebApplication1.Models
         public string Role { get; set; } = "Client";
         public DateTime? Registration_Date { get; set; } = DateTime.Now;
         public string? Account_Status { get; set; } = "Active";
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }
