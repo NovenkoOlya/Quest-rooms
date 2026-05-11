@@ -1,0 +1,55 @@
+﻿@model WebApplication1.Models.User
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg p-4">
+                <h2 class="card-title text-center mb-4">Реєстрація</h2>
+
+                <form asp-action="Register" method="post">
+                    <div class="form-group mb-3">
+                        <label asp-for="Full_Name" class="form-label">Повне ім'я</label>
+                        <input asp-for="Full_Name" class="form-control" />
+                        <span asp-validation-for="Full_Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Email" class="form-label">Email</label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Phone_Number" class="form-label">Телефон</label>
+                        <input asp-for="Phone_Number" class="form-control" />
+                        <span asp-validation-for="Phone_Number" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Password" class="form-label">Пароль</label>
+                        <input asp-for="Password" type="password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Role" class="form-label">Роль</label>
+                        <select asp-for="Role" class="form-select">
+                            <option value="">-- Оберіть роль --</option>
+                            <option value="Owner">Власник</option>
+                            <option value="Client">Гість</option>
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Зареєструватися</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

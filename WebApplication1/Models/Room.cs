@@ -15,10 +15,10 @@ namespace WebApplication1.Models
         public string? Address { get; set; }
         public string? Contact_Info { get; set; }
         public bool Availability_Status { get; set; } = true;
-        public DateTime QR_Creation_Date { get; set; } = DateTime.Now;
+        public DateTime? QR_Creation_Date { get; set; } = DateTime.Now;
 
         public User? Owner { get; set; }
         public ICollection<Quest> Quests { get; set; } = new List<Quest>();
-        public ICollection<Review> Reviews { get; set; } = new List<Review>();
+        public ICollection<Review> Review { get; set; } = new List<Review>();
     }
 }

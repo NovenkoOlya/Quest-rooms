@@ -1,0 +1,43 @@
+﻿@using WebApplication1.Models
+@model LoginViewModel
+
+@using System.Linq
+
+@{
+    ViewData["Title"] = "Вхід до системи";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-lg p-4">
+                <h2 class="card-title text-center mb-4">Вхід</h2>
+                <form asp-action="Login" method="post">
+
+                    <!-- Поле Логін -->
+                    <div class="form-group mb-3">
+                        <label asp-for="Login" class="form-label"></label>
+                        <input asp-for="Login" class="form-control" />
+                        <!-- ПЕРЕВІРТЕ ЦЕЙ БЛОК: Валідація конкретного поля -->
+                        <span asp-validation-for="Login" class="text-danger"></span>
+                    </div>
+
+                    <!-- Поле Пароль -->
+                    <div class="form-group mb-4">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <!-- ПЕРЕВІРТЕ ЦЕЙ БЛОК: Валідація конкретного поля -->
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Увійти</button>
+                    </div>
+                    <div asp-validation-summary="All" class="alert **bg-white** **text-dark** mb-3" role="alert"></div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

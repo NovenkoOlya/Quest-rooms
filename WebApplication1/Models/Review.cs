@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication1.Models
 {
@@ -6,8 +7,13 @@ namespace WebApplication1.Models
     {
         [Key]
         public int Review_ID { get; set; }
-        public int Client_ID { get; set; }
+
+        [ForeignKey("User")]
+        public int User_ID { get; set; }
+
+        [ForeignKey("Room")]
         public int Room_ID { get; set; }
+
         public int? Rating { get; set; } // 1–5
         public string? Review_Text { get; set; }
         public DateTime? R_Creation_Date { get; set; } = DateTime.Now;

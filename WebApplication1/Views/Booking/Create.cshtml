@@ -1,0 +1,24 @@
+﻿@model WebApplication1.Models.Booking
+
+<div class="container mt-4">
+    <h2>Зробити бронювання</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label class="form-label">Дата та час:</label>
+            <select asp-for="Session_ID" asp-items="ViewBag.Sessions" class="form-select" required></select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Кількість гравців:</label>
+            <input type="number" name="playersCount" class="form-control" min="1" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Контактні дані:</label>
+            <input type="text" name="clientContacts" class="form-control" placeholder="Ваш телефон або email" required />
+        </div>
+
+        <button type="submit" class="btn btn-success">Підтвердити бронювання</button>
+    </form>
+</div>

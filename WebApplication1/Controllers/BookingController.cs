@@ -28,7 +28,7 @@ namespace WebApplication1.Controllers
 
             var booking = new Booking
             {
-                Client_ID = clientId,
+                User_ID = clientId,
                 Session_ID = sessionId,
                 Players_Count = playersCount,
                 B_Status = "Pending"
@@ -49,7 +49,7 @@ namespace WebApplication1.Controllers
             var Booking = _context.Booking
                 .Include(b => b.Session)
                 .ThenInclude(s => s.Quest)
-                .Where(b => b.Client_ID == clientId).ToList();
+                .Where(b => b.User_ID == clientId).ToList();
             return View("MyBookings", Booking);
         }
 
@@ -68,7 +68,7 @@ namespace WebApplication1.Controllers
                 return Unauthorized();
             }
 
-            if (booking.Client_ID != clientId)
+            if (booking.User_ID != clientId)
             {
                 return Forbid();
             }

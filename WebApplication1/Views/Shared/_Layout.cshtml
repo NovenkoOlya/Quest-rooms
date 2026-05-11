@@ -23,18 +23,43 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="Admin/DashboardIndex">Admin</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/DashboardIndex">Admin</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="Booking/MyBookings">Booking</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Booking/MyBookings">Booking</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="Room/Details">Room</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Room/Details">Room</a>
                         </li>
-                        <
+                    
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item d-flex align-items-center me-3">
+                                <span class="text">
+                                    Вітаємо, <strong>@User.Identity.Name</strong>!
+                                    (<span class="badge bg-info text-dark">@User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value</span>)
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-danger text-white" asp-area="" asp-controller="Authorization" asp-action="Logout">
+                                    <i class="bi bi-box-arrow-right"></i> Вийти
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item me-2">
+                                <a class="btn btn-success text-white px-3" asp-area="" asp-controller="Authorization" asp-action="Login">Вхід</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-primary text-white px-3" asp-area="" asp-controller="Authorization" asp-action="Register">Реєстрація</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

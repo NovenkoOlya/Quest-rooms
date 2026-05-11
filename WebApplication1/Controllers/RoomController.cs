@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers
         {
             var room = _context.Room
                 .Include(r => r.Quests)
-                .Include(r => r.Reviews)
+                .Include(r => r.Review)
                 .FirstOrDefault(r => r.Room_ID == id);
             return View(room);
         }
